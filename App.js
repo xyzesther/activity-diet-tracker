@@ -3,33 +3,36 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomTabNavigator from './Components/TabNavigator';
-import AddActivitiesScreen from './Screens/AddActivitiesScreen';
+import AddAnActivityScreen from './Screens/AddAnActivityScreen';
 import AddDietScreen from './Screens/AddDietScreen';
-import { colors } from './colors';
+import { colors } from './Colors';
+import { EntriesProvider } from './Components/EntriesContext';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {backgroundColor: colors.primary},
-          headerTintColor: colors.text.primary,
-        }}
-      >
-        <Stack.Screen 
-          name="BottomTab" 
-          component={BottomTabNavigator} 
-          options={({ route }) => ({
-            title: getHeaderTitle(route),
-            headerShown: false 
-          })}
-        />
-        <Stack.Screen name="AddAnActivity" component={AddActivitiesScreen} />
-        <Stack.Screen name="AddADietEntry" component={AddDietScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <EntriesProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {backgroundColor: colors.primary},
+            headerTintColor: colors.text.primary,
+          }}
+        >
+          <Stack.Screen 
+            name="BottomTab" 
+            component={BottomTabNavigator} 
+            options={({ route }) => ({
+              title: getHeaderTitle(route),
+              headerShown: false 
+            })}
+          />
+          <Stack.Screen name="AddAnActivity" component={AddAnActivityScreen} />
+          <Stack.Screen name="AddADietEntry" component={AddDietScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </EntriesProvider>
   );
 }
 
