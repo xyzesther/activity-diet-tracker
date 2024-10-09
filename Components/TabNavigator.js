@@ -4,7 +4,7 @@ import DietScreen from '../Screens/DietScreen';
 import SettingsScreen from '../Screens/SettingsScreen';
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { colors } from '../colors';
+import { colors } from '../Colors';
 
 const Tab = createBottomTabNavigator();
 

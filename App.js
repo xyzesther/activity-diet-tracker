@@ -3,9 +3,9 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomTabNavigator from './Components/TabNavigator';
-import AddActivitiesScreen from './Screens/AddActivitiesScreen';
-import AddDietScreen from './Screens/AddDietScreen';
-import { colors } from './colors';
+import AddAnActivityScreen from './Screens/AddAnActivityScreen';
+import AddADietEntryScreen from './Screens/AddADietEntryScreen';
+import { colors } from './Colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,8 +26,8 @@ export default function App() {
             headerShown: false 
           })}
         />
-        <Stack.Screen name="AddAnActivity" component={AddActivitiesScreen} />
-        <Stack.Screen name="AddADietEntry" component={AddDietScreen} />
+        <Stack.Screen name="AddAnActivity" component={AddAnActivityScreen} />
+        <Stack.Screen name="AddADietEntry" component={AddADietEntryScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

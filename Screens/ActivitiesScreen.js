@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Button } from 'react-native'
 import React, { useLayoutEffect } from 'react'
-import { colors } from '../colors'
+import { colors } from '../Colors'
 
 export default function ActivitiesScreen({ navigation }) {
   useLayoutEffect(() => {
