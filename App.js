@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomTabNavigator from './Components/TabNavigator';
 import AddAnActivityScreen from './Screens/AddAnActivityScreen';
 import AddDietScreen from './Screens/AddDietScreen';
-import { colors } from './Colors';
+import { colors } from './styles/styles';
 import { EntriesProvider } from './Components/EntriesContext';
 
 const Stack = createNativeStackNavigator();

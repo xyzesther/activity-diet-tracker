@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TextInput, Alert, Button, TouchableWithoutFeedb
 import React, { useState, useContext } from 'react'
 import { EntriesContext } from '../Components/EntriesContext';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { colors } from '../Colors';
+import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles';
 
 export default function AddDietScreen({ navigation }) {
   const { addNewEntry } = useContext(EntriesContext);
@@ -95,34 +95,34 @@ export default function AddDietScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: colors.background,
+    padding: spacing.large,
+    backgroundColor: colors.background.primary,
   },
   label: {
-    fontSize: 16,
+    fontSize: fontSize.subtitle,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: spacing.small,
     color: colors.primary,
   },
   input: {
     height: 40,
-    borderWidth: 2,
+    borderWidth: borderWidth.medium,
     borderColor: colors.primary,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 20,
+    borderRadius: borderRadius.medium,
+    paddingHorizontal: spacing.medium,
+    marginBottom: spacing.large,
     color: colors.primary,
-    backgroundColor: colors.whiteBackground,
+    backgroundColor: colors.background.secondary,
   },
   descriptionInput: {
     height: 80,
-    borderWidth: 2,
+    borderWidth: borderWidth.medium,
     borderColor: colors.primary,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 20,
+    borderRadius: borderRadius.medium,
+    paddingHorizontal: spacing.medium,
+    marginBottom: spacing.large,
     color: colors.primary,
-    backgroundColor: colors.whiteBackground,
+    backgroundColor: colors.background.secondary,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     bottom: 100,
     left: 0,
     right: 0,
-    paddingHorizontal: 20,
+    paddingHorizontal: spacing.large,
   },
   button: {
     width: '40%',

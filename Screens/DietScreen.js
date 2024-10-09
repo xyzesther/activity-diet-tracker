@@ -1,6 +1,6 @@
 import { StyleSheet, View, Button } from 'react-native'
 import React, { useLayoutEffect } from 'react'
-import { colors } from '../Colors'
+import { colors, spacing } from '../styles/styles'
 import ItemsList from '../Components/ItemsList'
 
 export default function DietScreen({ navigation }) {
@@ -28,7 +28,7 @@ export default function DietScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
-    padding: 20,
+    backgroundColor: colors.background.primary,
+    padding: spacing.large,
   }
 })

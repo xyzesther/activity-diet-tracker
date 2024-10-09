@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, Keyboard, TouchableWi
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { EntriesContext } from '../Components/EntriesContext';
-import { colors } from '../Colors';
+import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles';
 
 export default function AddAnActivityScreen( { navigation }) {
   const { addNewEntry } = useContext(EntriesContext);
@@ -110,39 +110,40 @@ export default function AddAnActivityScreen( { navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: colors.background,
+    padding: spacing.large,
+    backgroundColor: colors.background.primary,
   },
   label: {
-    fontSize: 16,
+    fontSize: fontSize.subtitle,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: spacing.small,
     color: colors.primary,
   },
   dropdown: {
-    marginBottom: 10,
-    borderWidth: 2,
+    marginBottom: spacing.large,
+    borderWidth: borderWidth.medium,
     borderColor: colors.primary,
-    borderRadius: 5,
-    backgroundColor: colors.background,
+    borderRadius: borderRadius.medium,
+    backgroundColor: colors.background.secondary,
   },
   dropdownText: {
     color: colors.primary,
   },
   dropdownContainer: {
-    borderWidth: 2,
+    borderWidth: borderWidth.small,
     borderColor: colors.primary,
-    borderRadius: 5,
-    backgroundColor: colors.background,
+    borderRadius: borderRadius.medium,
+    backgroundColor: colors.background.white,
   },
   input: {
     height: 40,
-    borderWidth: 2,
+    borderWidth: borderWidth.medium,
     borderColor: colors.primary,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 10,
+    borderRadius: borderRadius.medium,
+    paddingHorizontal: spacing.medium,
+    marginBottom: spacing.large,
     color: colors.primary,
+    backgroundColor: colors.background.secondary,
   },
 
   buttonContainer: {
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
     bottom: 100,
     left: 0,
     right: 0,
-    paddingHorizontal: 20,
+    paddingHorizontal: spacing.large,
   },
 
   button: {
