@@ -6,9 +6,7 @@ import { useTheme } from '../Components/ThemeContext';
 
 export default function ActivitiesScreen({ navigation }) {
   const { theme } = useTheme();
-
-  console.log('Current theme:', theme);
-
+  
   useLayoutEffect(() => {
     navigation.setOptions({
       title: 'Activities',
