@@ -28,8 +28,8 @@ export default function App() {
               headerShown: false 
             })}
           />
-          <Stack.Screen name="AddAnActivity" component={AddAnActivityScreen} />
-          <Stack.Screen name="AddADietEntry" component={AddDietScreen} />
+          <Stack.Screen name="Add An Activity" component={AddAnActivityScreen} />
+          <Stack.Screen name="Add A Diet Entry" component={AddDietScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </EntriesProvider>

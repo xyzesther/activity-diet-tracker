@@ -11,7 +11,7 @@ export default function ActivitiesScreen({ navigation }) {
         <Button
           title="Add"
           onPress={() => {
-            navigation.navigate('AddAnActivity')
+            navigation.navigate('Add An Activity')
           }}
         />
       ),
