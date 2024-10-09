@@ -154,10 +154,11 @@ const styles = StyleSheet.create({
     bottom: 100,
     left: 0,
     right: 0,
-    paddingHorizontal: spacing.large,
+    paddingHorizontal: spacing.small,
   },
 
   button: {
-    width: '40%', 
+    width: '30%',
+    marginHorizontal: spacing.large,
   },
 });
