@@ -35,33 +35,35 @@ export default function ItemsList({ type }) {
 
 const styles = StyleSheet.create({
   itemContainer: {
+    flex: 1,
     backgroundColor: colors.primary,
     borderColor: colors.primary,
     borderWidth: 2,
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
-    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   itemName: {
     color: colors.text.primary,
     fontSize: 18,
     fontWeight: 'bold',
+    alignSelf: 'center',
   },
   itemDetailsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    padding: 10,
     backgroundColor: colors.whiteBackground,
   },
   itemDate: {
     color: colors.primary,
     fontSize: 16,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   itemDetails: {
     color: colors.primary,
     fontSize: 16,
-  }
-  
-
+    textAlign: 'center',
+  },
 })
