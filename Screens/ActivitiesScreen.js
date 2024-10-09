@@ -1,12 +1,34 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Button } from 'react-native'
+import React, { useLayoutEffect } from 'react'
+import { colors } from '../colors'
 
-export default function ActivitiesScreen() {
+export default function ActivitiesScreen({ navigation }) {
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: 'Activities',
+      headerRight: () => (
+        <Button
+          title="Add"
+          onPress={() => {
+            navigation.navigate('AddAnActivity')
+          }}
+        />
+      ),
+    })
+  }, [navigation])
+
   return (
-    <View>
+    <View style={styles.container}>
       <Text>ActivitiesScreen</Text>
     </View>
   )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
