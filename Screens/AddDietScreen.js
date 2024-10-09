@@ -67,6 +67,7 @@ export default function AddDietScreen({ navigation }) {
               setDietDate(new Date()); 
             }
           }}
+          showSoftInputOnFocus={false}
         />
         {showDatePicker && (
           <DateTimePicker
