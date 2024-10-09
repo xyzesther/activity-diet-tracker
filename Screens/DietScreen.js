@@ -1,9 +1,12 @@
 import { StyleSheet, View, Button } from 'react-native'
 import React, { useLayoutEffect } from 'react'
-import { colors, spacing } from '../styles/styles'
+import { spacing } from '../styles/styles'
 import ItemsList from '../Components/ItemsList'
+import { useTheme } from '../Components/ThemeContext';
 
 export default function DietScreen({ navigation }) {
+  const { theme } = useTheme();
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: 'Diet',
@@ -19,7 +22,7 @@ export default function DietScreen({ navigation }) {
   }, [navigation])
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <ItemsList type='diet' />
     </View>
   )
@@ -28,7 +31,6 @@ export default function DietScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.primary,
     padding: spacing.large,
   }
 })

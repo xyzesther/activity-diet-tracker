@@ -3,13 +3,14 @@ export const colors = {
   background: {
     primary: '#ababcb',
     secondary: 'lightgrey',
+    dark: '#606090',  
     white: '#fff',
   },
   tabBarActive: '#e6b213',
   disabled: '#8a8a8c',
   text: {
     primary: 'white',
-    secondary: '#000',
+    secondary: '#483d8b',
   }
 };
 

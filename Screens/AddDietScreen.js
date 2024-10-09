@@ -3,6 +3,7 @@ import React, { useState, useContext } from 'react'
 import { EntriesContext } from '../Components/EntriesContext';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles';
+import { useTheme } from '../Components/ThemeContext';
 
 export default function AddDietScreen({ navigation }) {
   const { addNewEntry } = useContext(EntriesContext);
@@ -10,6 +11,7 @@ export default function AddDietScreen({ navigation }) {
   const [dietCalories, setDietCalories] = useState('');
   const [dietDate, setDietDate] = useState(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const { theme } = useTheme();
 
   const validateInputs = () => {
     if (!dietDescription || !dietDate || !dietCalories || isNaN(dietCalories) || Number(dietCalories) < 0) {
@@ -37,8 +39,8 @@ export default function AddDietScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Text style={styles.label}>Description *</Text>
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
+        <Text style={[styles.label, { color: theme.textColor }]}>Description *</Text>
         <TextInput
           style={styles.descriptionInput}
           value={dietDescription}
@@ -47,7 +49,7 @@ export default function AddDietScreen({ navigation }) {
           textAlignVertical='top'
         />
 
-        <Text style={styles.label}>Calories *</Text>
+        <Text style={[styles.label, { color: theme.textColor }]}>Calories *</Text>
         <TextInput
           style={styles.input}
           value={dietCalories}
@@ -55,7 +57,7 @@ export default function AddDietScreen({ navigation }) {
           keyboardType='numeric'
         />
 
-        <Text style={styles.label}>Date *</Text>
+        <Text style={[styles.label, { color: theme.textColor }]}>Date *</Text>
         <TextInput
           style={styles.input}
           value={dietDate ? dietDate.toDateString() : ''}
@@ -96,13 +98,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: spacing.large,
-    backgroundColor: colors.background.primary,
   },
   label: {
     fontSize: fontSize.subtitle,
     fontWeight: 'bold',
     marginBottom: spacing.small,
-    color: colors.primary,
   },
   input: {
     height: 40,

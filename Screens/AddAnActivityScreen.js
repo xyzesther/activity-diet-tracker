@@ -4,6 +4,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { EntriesContext } from '../Components/EntriesContext';
 import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles';
+import { useTheme } from '../Components/ThemeContext';
 
 export default function AddAnActivityScreen( { navigation }) {
   const { addNewEntry } = useContext(EntriesContext);
@@ -21,6 +22,8 @@ export default function AddAnActivityScreen( { navigation }) {
     { label: 'Cycling', value: 'Cycling' },
     { label: 'Hiking', value: 'Hiking' },
   ]);
+
+  const { theme } = useTheme();
 
   const validateInputs = () => {
     if (!activityType || !duration || !date) {
@@ -48,8 +51,8 @@ export default function AddAnActivityScreen( { navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Text style={styles.label}>Activity *</Text>
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
+        <Text style={[styles.label, { color: theme.textColor }]}>Activity *</Text>
         <DropDownPicker
           open={open}
           value={activityType}
@@ -63,7 +66,7 @@ export default function AddAnActivityScreen( { navigation }) {
           dropDownContainerStyle={styles.dropdownContainer}
         />
 
-        <Text style={styles.label}>Duration (min)*</Text>
+        <Text style={[styles.label, { color: theme.textColor }]}>Duration (min)*</Text>
         <TextInput
           style={styles.input}
           value={duration}
@@ -71,7 +74,7 @@ export default function AddAnActivityScreen( { navigation }) {
           keyboardType="numeric"
         />
 
-        <Text style={styles.label}>Date *</Text>
+        <Text style={[styles.label, { color: theme.textColor }]}>Date *</Text>
         <TextInput
           style={styles.input}
           value={date ? date.toDateString() : ''}
@@ -111,13 +114,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: spacing.large,
-    backgroundColor: colors.background.primary,
   },
   label: {
     fontSize: fontSize.subtitle,
     fontWeight: 'bold',
     marginBottom: spacing.small,
-    color: colors.primary,
   },
   dropdown: {
     marginBottom: spacing.large,

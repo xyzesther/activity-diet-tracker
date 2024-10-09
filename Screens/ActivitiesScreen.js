@@ -1,9 +1,14 @@
 import { StyleSheet, View, Button } from 'react-native'
 import React, { useLayoutEffect } from 'react'
-import { colors, spacing } from '../styles/styles'
+import { spacing } from '../styles/styles'
 import ItemsList from '../Components/ItemsList'
+import { useTheme } from '../Components/ThemeContext';
 
 export default function ActivitiesScreen({ navigation }) {
+  const { theme } = useTheme();
+
+  console.log('Current theme:', theme);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: 'Activities',
@@ -19,7 +24,7 @@ export default function ActivitiesScreen({ navigation }) {
   }, [navigation])
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <ItemsList type='exercise' />
     </View>
   )
@@ -28,7 +33,6 @@ export default function ActivitiesScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.primary,
     padding: spacing.large,
   }
 })
