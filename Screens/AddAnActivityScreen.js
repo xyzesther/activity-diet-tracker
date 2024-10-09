@@ -34,8 +34,9 @@ export default function AddAnActivityScreen( { navigation }) {
     if (validateInputs()) {
       const newEntry = {
         type: 'exercise',
+        id: Date.now(),
         name: activityType,
-        duration: `${duration} min`,
+        details: `${duration} min`,
         date: date.toISOString().split('T')[0],
         isSpecial: (activityType === 'running' || activityType === 'weights') && parseInt(duration) > 60,
       };
