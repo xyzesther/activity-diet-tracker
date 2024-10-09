@@ -29,8 +29,20 @@ export default function App() {
                 headerShown: false 
               })}
             />
-            <Stack.Screen name="Add An Activity" component={AddAnActivityScreen} />
-            <Stack.Screen name="Add A Diet Entry" component={AddDietScreen} />
+            <Stack.Screen 
+              name="Add An Activity" 
+              component={AddAnActivityScreen}
+              options={{
+                headerBackTitleVisible: false,
+              }}
+            />
+            <Stack.Screen 
+              name="Add A Diet Entry" 
+              component={AddDietScreen}
+              options={{
+                headerBackTitleVisible: false,
+              }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </EntriesProvider>
