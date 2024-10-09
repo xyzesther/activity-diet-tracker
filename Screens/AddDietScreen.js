@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 120,
+    bottom: 100,
     left: 0,
     right: 0,
     paddingHorizontal: 20,
