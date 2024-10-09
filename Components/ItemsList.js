@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, Text, View, Image } from 'react-native'
 import React, { useContext } from 'react'
 import { EntriesContext } from './EntriesContext'
 import { colors } from '../Colors'
@@ -12,7 +12,14 @@ export default function ItemsList({ type }) {
     return (
       <View style={styles.itemContainer}>
         <Text style={styles.itemName}>{item.name}</Text>
-        <View style={styles.itemDetailsContainer}>
+        {item.isSpecial && 
+          <Image 
+            source={require('../assets/special.png')}
+            alt='this is the special icon for the item'
+            style={styles.image}
+          />
+        }
+        <View style={styles.itemDateContainer}>
           <Text style={styles.itemDate}>{item.date}</Text>
         </View>
         <View style={styles.itemDetailsContainer}>
@@ -43,27 +50,47 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
   },
+
   itemName: {
+    flexGrow: 1,
     color: colors.text.primary,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
-    alignSelf: 'center',
   },
-  itemDetailsContainer: {
-    padding: 10,
+
+  itemDateContainer: {
+    marginHorizontal: 2,
     backgroundColor: colors.whiteBackground,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
   },
+
   itemDate: {
     color: colors.primary,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     textAlign: 'center',
   },
+
+  itemDetailsContainer: {
+    marginHorizontal: 2,
+    backgroundColor: colors.whiteBackground,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+  },
+
   itemDetails: {
     color: colors.primary,
-    fontSize: 16,
+    fontSize: 14,
+    fontWeight: 'bold',
     textAlign: 'center',
   },
+
+  image: {
+    width: 20,
+    height: 20,
+    marginHorizontal: 5,
+  }
 })

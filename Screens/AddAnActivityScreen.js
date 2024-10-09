@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { EntriesContext } from '../Components/EntriesContext';
@@ -13,13 +13,13 @@ export default function AddAnActivityScreen( { navigation }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
-    { label: 'Walking', value: 'walking' },
-    { label: 'Running', value: 'running' },
-    { label: 'Swimming', value: 'swimming' },
-    { label: 'Weights', value: 'weights' },
-    { label: 'Yoga', value: 'yoga' },
-    { label: 'Cycling', value: 'cycling' },
-    { label: 'Hiking', value: 'hiking' },
+    { label: 'Walking', value: 'Walking' },
+    { label: 'Running', value: 'Running' },
+    { label: 'Swimming', value: 'Swimming' },
+    { label: 'Weights', value: 'Weights' },
+    { label: 'Yoga', value: 'Yoga' },
+    { label: 'Cycling', value: 'Cycling' },
+    { label: 'Hiking', value: 'Hiking' },
   ]);
 
   const validateInputs = () => {
@@ -37,8 +37,8 @@ export default function AddAnActivityScreen( { navigation }) {
         id: Date.now(),
         name: activityType,
         details: `${duration} min`,
-        date: date.toISOString().split('T')[0],
-        isSpecial: (activityType === 'running' || activityType === 'weights') && parseInt(duration) > 60,
+        date: date.toDateString(),
+        isSpecial: (activityType === 'Running' || activityType === 'Weights') && parseInt(duration) > 60,
       };
 
       addNewEntry('exercise', newEntry);
@@ -47,57 +47,63 @@ export default function AddAnActivityScreen( { navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.label}>Activity *</Text>
+        <DropDownPicker
+          open={open}
+          value={activityType}
+          items={items}
+          setOpen={setOpen}
+          setValue={setActivityType}
+          setItems={setItems}
+          style={styles.dropdown}
+          placeholder="Select An Activity"
+          textStyle={styles.dropdownText}
+          dropDownContainerStyle={styles.dropdownContainer}
+        />
 
-      <Text style={styles.label}>Activity *</Text>
-      <DropDownPicker
-        open={open}
-        value={activityType}
-        items={items}
-        setOpen={setOpen}
-        setValue={setActivityType}
-        setItems={setItems}
-        style={styles.dropdown}
-        placeholder="Select An Activity"
-        textStyle={styles.dropdownText}
-        dropDownContainerStyle={styles.dropdownContainer}
-      />
+        <Text style={styles.label}>Duration (min)*</Text>
+        <TextInput
+          style={styles.input}
+          value={duration}
+          onChangeText={setDuration}
+          keyboardType="numeric"
+        />
 
-      <Text style={styles.label}>Duration (min)*</Text>
-      <TextInput
-        style={styles.input}
-        value={duration}
-        onChangeText={setDuration}
-        keyboardType="numeric"
-      />
-
-      <Text style={styles.label}>Date *</Text>
-      <TextInput
-        style={styles.input}
-        value={date ? date.toDateString() : ''}
-        onFocus={() => setShowDatePicker(true)}
-      />
-      {showDatePicker && (
-        <DateTimePicker
-          value={new Date()}
-          mode="date"
-          display="inline"
-          onChange={(event, selectedDate) => {
-            setShowDatePicker(false);
-            if (selectedDate) setDate(selectedDate);
+        <Text style={styles.label}>Date *</Text>
+        <TextInput
+          style={styles.input}
+          value={date ? date.toDateString() : ''}
+          onPressIn={() => {
+            setShowDatePicker(true);
+            if (!date) { 
+              setDate(new Date()); 
+            }
           }}
         />
-      )}
+        {showDatePicker && (
+          <DateTimePicker
+            value={date || new Date()}
+            mode="date"
+            display="inline"
+            onChange={(event, selectedDate) => {
+              setShowDatePicker(false);
+              if (selectedDate) setDate(selectedDate);
+            }}
+          />
+        )}
 
-      <View style={styles.buttonContainer}>
-        <View style={styles.button}>
-          <Button title="Cancel" onPress={() => navigation.goBack()} />
-        </View>
-        <View style={styles.button}>
-          <Button title="Save" onPress={handleAddActivity} />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button title="Cancel" onPress={() => navigation.goBack()} />
+          </View>
+          <View style={styles.button}>
+            <Button title="Save" onPress={handleAddActivity} />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
