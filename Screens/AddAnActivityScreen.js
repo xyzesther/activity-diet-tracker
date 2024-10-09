@@ -9,7 +9,7 @@ export default function AddAnActivityScreen( { navigation }) {
   const { addNewEntry } = useContext(EntriesContext);
   const [activityType, setActivityType] = useState('');
   const [duration, setDuration] = useState('');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
@@ -74,12 +74,12 @@ export default function AddAnActivityScreen( { navigation }) {
       <Text style={styles.label}>Date *</Text>
       <TextInput
         style={styles.input}
-        value={date.toDateString()}
+        value={date ? date.toDateString() : ''}
         onFocus={() => setShowDatePicker(true)}
       />
       {showDatePicker && (
         <DateTimePicker
-          value={date}
+          value={new Date()}
           mode="date"
           display="inline"
           onChange={(event, selectedDate) => {
@@ -138,12 +138,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: colors.primary,
   },
+
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',  
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 120,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 20,
   },
 
   button: {
-    width: '40%',
+    width: '40%', 
   },
 });
