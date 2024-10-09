@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, View, Button } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { colors } from '../Colors'
 import ItemsList from '../Components/ItemsList'
