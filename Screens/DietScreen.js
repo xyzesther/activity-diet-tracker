@@ -3,7 +3,7 @@ import React, { useLayoutEffect } from 'react'
 import { colors } from '../Colors'
 import ItemsList from '../Components/ItemsList'
 
-export default function ActivitiesScreen({ navigation }) {
+export default function DietScreen({ navigation }) {
   useLayoutEffect(() => {
     navigation.setOptions({
       title: 'Diet',
