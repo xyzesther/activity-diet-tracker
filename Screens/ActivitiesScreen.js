@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Button } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { colors } from '../Colors'
+import ItemsList from '../Components/ItemsList'
 
 export default function ActivitiesScreen({ navigation }) {
   useLayoutEffect(() => {
@@ -19,7 +20,7 @@ export default function ActivitiesScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text>ActivitiesScreen</Text>
+      <ItemsList type='exercise' />
     </View>
   )
 }
@@ -29,6 +30,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
     alignItems: 'center',
-    justifyContent: 'center'
+    padding: 20,
   }
 })
