@@ -40,9 +40,11 @@ export default function AddDietScreen({ navigation }) {
       <View style={styles.container}>
         <Text style={styles.label}>Description *</Text>
         <TextInput
-          style={styles.input}
+          style={styles.descriptionInput}
           value={dietDescription}
           onChangeText={(text) => setDietDescription(text)}
+          multiline={true}
+          textAlignVertical='top'
         />
 
         <Text style={styles.label}>Calories *</Text>
@@ -108,8 +110,19 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     borderRadius: 5,
     paddingHorizontal: 10,
-    marginBottom: 10,
+    marginBottom: 20,
     color: colors.primary,
+    backgroundColor: colors.whiteBackground,
+  },
+  descriptionInput: {
+    height: 80,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    color: colors.primary,
+    backgroundColor: colors.whiteBackground,
   },
   buttonContainer: {
     flexDirection: 'row',
