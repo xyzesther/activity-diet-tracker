@@ -50,63 +50,62 @@ export default function AddAnActivityScreen( { navigation }) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={[styles.container, { backgroundColor: theme.background }]}>
-        <Text style={[styles.label, { color: theme.textColor }]}>Activity *</Text>
-        <DropDownPicker
-          open={open}
-          value={activityType}
-          items={items}
-          setOpen={setOpen}
-          setValue={setActivityType}
-          setItems={setItems}
-          style={styles.dropdown}
-          placeholder="Select An Activity"
-          textStyle={styles.dropdownText}
-          dropDownContainerStyle={styles.dropdownContainer}
-        />
+    
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text style={[styles.label, { color: theme.textColor }]}>Activity *</Text>
+      <DropDownPicker
+        open={open}
+        value={activityType}
+        items={items}
+        setOpen={setOpen}
+        setValue={setActivityType}
+        setItems={setItems}
+        style={styles.dropdown}
+        placeholder="Select An Activity"
+        textStyle={styles.dropdownText}
+        dropDownContainerStyle={styles.dropdownContainer}
+      />
 
-        <Text style={[styles.label, { color: theme.textColor }]}>Duration (min)*</Text>
-        <TextInput
-          style={styles.input}
-          value={duration}
-          onChangeText={setDuration}
-          keyboardType="numeric"
-        />
+      <Text style={[styles.label, { color: theme.textColor }]}>Duration (min)*</Text>
+      <TextInput
+        style={styles.input}
+        value={duration}
+        onChangeText={setDuration}
+        keyboardType="numeric"
+      />
 
-        <Text style={[styles.label, { color: theme.textColor }]}>Date *</Text>
-        <TextInput
-          style={styles.input}
-          value={date ? date.toDateString() : ''}
-          onPressIn={() => {
-            setShowDatePicker(true);
-            if (!date) { 
-              setDate(new Date()); 
-            }
+      <Text style={[styles.label, { color: theme.textColor }]}>Date *</Text>
+      <TextInput
+        style={styles.input}
+        value={date ? date.toDateString() : ''}
+        onPressIn={() => {
+          showDatePicker ? setShowDatePicker(false) : setShowDatePicker(true);
+          if (!date) { 
+            setDate(new Date()); 
+          }
+        }}
+      />
+      {showDatePicker && (
+        <DateTimePicker
+          value={date || new Date()}
+          mode="date"
+          display="inline"
+          onChange={(event, selectedDate) => {
+            setShowDatePicker(false);
+            if (selectedDate) setDate(selectedDate);
           }}
         />
-        {showDatePicker && (
-          <DateTimePicker
-            value={date || new Date()}
-            mode="date"
-            display="inline"
-            onChange={(event, selectedDate) => {
-              setShowDatePicker(false);
-              if (selectedDate) setDate(selectedDate);
-            }}
-          />
-        )}
+      )}
 
-        <View style={styles.buttonContainer}>
-          <View style={styles.button}>
-            <Button title="Cancel" onPress={() => navigation.goBack()} />
-          </View>
-          <View style={styles.button}>
-            <Button title="Save" onPress={handleAddActivity} />
-          </View>
+      <View style={styles.buttonContainer}>
+        <View style={styles.button}>
+          <Button title="Cancel" onPress={() => navigation.goBack()} />
+        </View>
+        <View style={styles.button}>
+          <Button title="Save" onPress={handleAddActivity} />
         </View>
       </View>
-    </TouchableWithoutFeedback>
+    </View>
   );
 }
 
