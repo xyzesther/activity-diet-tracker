@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, TextInput, Alert, Button, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import React, { useState, useContext } from 'react'
 import { EntriesContext } from '../Components/EntriesContext';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles';
 import { useTheme } from '../Components/ThemeContext';
+import PressableButton from '../Components/PressableButton';
 
 export default function AddDietScreen({ navigation }) {
   const { addNewEntry } = useContext(EntriesContext);
@@ -82,12 +83,12 @@ export default function AddDietScreen({ navigation }) {
         )}
 
         <View style={styles.buttonContainer}>
-          <View style={styles.button}>
-            <Button title="Cancel" onPress={() => navigation.goBack()} />
-          </View>
-          <View style={styles.button}>
-            <Button title="Save" onPress={handleAddDiet} />
-          </View>
+          <PressableButton pressedFunction={() => navigation.goBack()}>
+            <Text style={styles.buttonText}>Cancel</Text>
+          </PressableButton>
+          <PressableButton pressedFunction={handleAddDiet}>
+            <Text style={styles.buttonText}>Save</Text>
+          </PressableButton>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -134,8 +135,8 @@ const styles = StyleSheet.create({
     right: 0,
     paddingHorizontal: spacing.small,
   },
-  button: {
-    width: '30%',
-    marginHorizontal: spacing.large,
+  buttonText: {
+    fontSize: fontSize.subtitle,
+    color: colors.text.primary,
   },
 });

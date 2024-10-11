@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { EntriesContext } from '../Components/EntriesContext';
 import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles';
 import { useTheme } from '../Components/ThemeContext';
+import PressableButton from '../Components/PressableButton';
 
 export default function AddAnActivityScreen( { navigation }) {
   const { addNewEntry } = useContext(EntriesContext);
@@ -98,12 +99,16 @@ export default function AddAnActivityScreen( { navigation }) {
       )}
 
       <View style={styles.buttonContainer}>
-        <View style={styles.button}>
-          <Button title="Cancel" onPress={() => navigation.goBack()} />
-        </View>
-        <View style={styles.button}>
-          <Button title="Save" onPress={handleAddActivity} />
-        </View>
+        <PressableButton 
+          pressedFunction={() => navigation.goBack()}
+        >
+          <Text style={styles.buttonText}>Cancel</Text>
+        </PressableButton>
+        <PressableButton 
+          pressedFunction={handleAddActivity}
+        >
+          <Text style={styles.buttonText}>Save</Text>
+        </PressableButton>
       </View>
     </View>
   );
@@ -145,7 +150,6 @@ const styles = StyleSheet.create({
     color: colors.primary,
     backgroundColor: colors.background.secondary,
   },
-
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -155,9 +159,8 @@ const styles = StyleSheet.create({
     right: 0,
     paddingHorizontal: spacing.small,
   },
-
-  button: {
-    width: '30%',
-    marginHorizontal: spacing.large,
+  buttonText: {
+    fontSize: fontSize.subtitle,
+    color: colors.text.primary,
   },
 });
