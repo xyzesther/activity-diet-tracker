@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Alert } from 'react-native'
 import React, { useState, useContext } from 'react'
 import { EntriesContext } from '../Components/EntriesContext';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -39,59 +39,56 @@ export default function AddDietScreen({ navigation }) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={[styles.container, { backgroundColor: theme.background }]}>
-        <Text style={[styles.label, { color: theme.textColor }]}>Description *</Text>
-        <TextInput
-          style={styles.descriptionInput}
-          value={dietDescription}
-          onChangeText={(text) => setDietDescription(text)}
-          multiline={true}
-          textAlignVertical='top'
-        />
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text style={[styles.label, { color: theme.textColor }]}>Description *</Text>
+      <TextInput
+        style={styles.descriptionInput}
+        value={dietDescription}
+        onChangeText={(text) => setDietDescription(text)}
+        multiline={true}
+        textAlignVertical='top'
+      />
 
-        <Text style={[styles.label, { color: theme.textColor }]}>Calories *</Text>
-        <TextInput
-          style={styles.input}
-          value={dietCalories}
-          onChangeText={(text) => setDietCalories(text)}
-          keyboardType='numeric'
-        />
+      <Text style={[styles.label, { color: theme.textColor }]}>Calories *</Text>
+      <TextInput
+        style={styles.input}
+        value={dietCalories}
+        onChangeText={(text) => setDietCalories(text)}
+        keyboardType='numeric'
+      />
 
-        <Text style={[styles.label, { color: theme.textColor }]}>Date *</Text>
-        <TextInput
-          style={styles.input}
-          value={dietDate ? dietDate.toDateString() : ''}
-          onPressIn={() => {
-            setShowDatePicker(true);
-            if (!dietDate) { 
-              setDietDate(new Date()); 
-            }
+      <Text style={[styles.label, { color: theme.textColor }]}>Date *</Text>
+      <TextInput
+        style={styles.input}
+        value={dietDate ? dietDate.toDateString() : ''}
+        onPressIn={() => {
+          setShowDatePicker(true);
+          if (!dietDate) { 
+            setDietDate(new Date()); 
+          }
+        }}
+      />
+      {showDatePicker && (
+        <DateTimePicker
+          value={dietDate || new Date()}
+          mode="date"
+          display="inline"
+          onChange={(event, selectedDate) => {
+            setShowDatePicker(false);
+            if (selectedDate) setDietDate(selectedDate);
           }}
-          showSoftInputOnFocus={false}
         />
-        {showDatePicker && (
-          <DateTimePicker
-            value={dietDate || new Date()}
-            mode="date"
-            display="inline"
-            onChange={(event, selectedDate) => {
-              setShowDatePicker(false);
-              if (selectedDate) setDietDate(selectedDate);
-            }}
-          />
-        )}
+      )}
 
-        <View style={styles.buttonContainer}>
-          <PressableButton pressedFunction={() => navigation.goBack()}>
-            <Text style={styles.buttonText}>Cancel</Text>
-          </PressableButton>
-          <PressableButton pressedFunction={handleAddDiet}>
-            <Text style={styles.buttonText}>Save</Text>
-          </PressableButton>
-        </View>
+      <View style={styles.buttonContainer}>
+        <PressableButton pressedFunction={() => navigation.goBack()}>
+          <Text style={styles.buttonText}>Cancel</Text>
+        </PressableButton>
+        <PressableButton pressedFunction={handleAddDiet}>
+          <Text style={styles.buttonText}>Save</Text>
+        </PressableButton>
       </View>
-    </TouchableWithoutFeedback>
+    </View>
   )
     
 }
