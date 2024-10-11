@@ -7,7 +7,6 @@ export const colors = {
     white: '#fff',
   },
   tabBarActive: '#e6b213',
-  disabled: '#8a8a8c',
   text: {
     primary: 'white',
     secondary: '#483d8b',
