@@ -6,8 +6,10 @@ import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/
 export default function ItemsList({ type }) {
   const { entries } = useContext(EntriesContext);
 
+  // Filter entries based on type
   const filteredEntries = entries[type];
-  
+
+  // Render items
   function renderItems({ item }) {
     return (
       <View style={styles.itemContainer}>

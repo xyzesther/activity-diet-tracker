@@ -1,5 +1,5 @@
 import { StyleSheet, View, TouchableOpacity, Image } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useEffect } from 'react'
 import { spacing } from '../styles/styles'
 import ItemsList from '../Components/ItemsList'
 import { useTheme } from '../Components/ThemeContext';
@@ -7,7 +7,7 @@ import { useTheme } from '../Components/ThemeContext';
 export default function ActivitiesScreen({ navigation }) {
   const { theme } = useTheme();
   
-  useLayoutEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       title: 'Activities',
       headerRight: () => (

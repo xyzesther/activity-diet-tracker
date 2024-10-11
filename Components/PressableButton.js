@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, View } from 'react-native'
 import React from 'react'
-import { colors, fontSize, spacing } from '../styles/styles'
+import { colors, spacing } from '../styles/styles'
 
 export default function PressableButton({ pressedFunction, style, pressedStyle, children }) {
   return (

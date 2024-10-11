@@ -14,6 +14,7 @@ export default function AddDietScreen({ navigation }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const { theme } = useTheme();
 
+  // Validate inputs
   const validateInputs = () => {
     if (!dietDescription || !dietDate || !dietCalories || isNaN(dietCalories) || Number(dietCalories) < 0) {
       Alert.alert('Invalid input', 'Please check your input values');
@@ -22,6 +23,7 @@ export default function AddDietScreen({ navigation }) {
     return true;
   };
 
+  // Handle adding a new diet entry
   function handleAddDiet() {
     if (validateInputs()) {
       const newEntry = {
@@ -40,6 +42,7 @@ export default function AddDietScreen({ navigation }) {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
+      {/* Description */}
       <Text style={[styles.label, { color: theme.textColor }]}>Description *</Text>
       <TextInput
         style={styles.descriptionInput}
@@ -49,6 +52,7 @@ export default function AddDietScreen({ navigation }) {
         textAlignVertical='top'
       />
 
+      {/* Calories */}
       <Text style={[styles.label, { color: theme.textColor }]}>Calories *</Text>
       <TextInput
         style={styles.input}
@@ -57,6 +61,7 @@ export default function AddDietScreen({ navigation }) {
         keyboardType='numeric'
       />
 
+      {/* Date */}
       <Text style={[styles.label, { color: theme.textColor }]}>Date *</Text>
       <TextInput
         style={styles.input}
@@ -80,6 +85,7 @@ export default function AddDietScreen({ navigation }) {
         />
       )}
 
+      {/* Buttons */}
       <View style={styles.buttonContainer}>
         <PressableButton pressedFunction={() => navigation.goBack()}>
           <Text style={styles.buttonText}>Cancel</Text>

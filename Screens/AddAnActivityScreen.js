@@ -26,6 +26,7 @@ export default function AddAnActivityScreen( { navigation }) {
 
   const { theme } = useTheme();
 
+  // Validate inputs
   const validateInputs = () => {
     if (!activityType || !duration || !date) {
       Alert.alert('Invalid input', 'Please check your input values');
@@ -34,6 +35,7 @@ export default function AddAnActivityScreen( { navigation }) {
     return true;
   };
 
+  // Handle adding a new activity entry
   function handleAddActivity() {
     if (validateInputs()) {
       const newEntry = {
@@ -53,6 +55,7 @@ export default function AddAnActivityScreen( { navigation }) {
   return (
     
     <View style={[styles.container, { backgroundColor: theme.background }]}>
+      {/* Activity */}
       <Text style={[styles.label, { color: theme.textColor }]}>Activity *</Text>
       <DropDownPicker
         open={open}
@@ -67,6 +70,7 @@ export default function AddAnActivityScreen( { navigation }) {
         dropDownContainerStyle={styles.dropdownContainer}
       />
 
+      {/* Duration */}
       <Text style={[styles.label, { color: theme.textColor }]}>Duration (min)*</Text>
       <TextInput
         style={styles.input}
@@ -75,6 +79,7 @@ export default function AddAnActivityScreen( { navigation }) {
         keyboardType="numeric"
       />
 
+      {/* Date */}
       <Text style={[styles.label, { color: theme.textColor }]}>Date *</Text>
       <TextInput
         style={styles.input}
@@ -98,6 +103,7 @@ export default function AddAnActivityScreen( { navigation }) {
         />
       )}
 
+      {/* Buttons */}
       <View style={styles.buttonContainer}>
         <PressableButton 
           pressedFunction={() => navigation.goBack()}
