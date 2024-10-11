@@ -62,7 +62,7 @@ export default function AddDietScreen({ navigation }) {
         style={styles.input}
         value={dietDate ? dietDate.toDateString() : ''}
         onPressIn={() => {
-          setShowDatePicker(true);
+          showDatePicker ? setShowDatePicker(false) : setShowDatePicker(true);
           if (!dietDate) { 
             setDietDate(new Date()); 
           }
