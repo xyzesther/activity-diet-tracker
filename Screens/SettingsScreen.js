@@ -1,20 +1,17 @@
 import React from 'react';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { useTheme } from '../Components/ThemeContext';
-import { colors, spacing } from '../styles/styles';
+import { colors, fontSize } from '../styles/styles';
+import PressableButton from '../Components/PressableButton';
 
 export default function SettingsScreen() {
   const { theme, toggleTheme } = useTheme();
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <View style={styles.themeButtonContainer}>
-        <Button 
-          title="Toggle Theme" 
-          onPress={toggleTheme} 
-          color={colors.text.primary}
-        />
-      </View>
+      <PressableButton pressedFunction={toggleTheme}>
+        <Text style={styles.buttonText}>Toggle Theme</Text>
+      </PressableButton>
     </View>
   );
 }
@@ -25,9 +22,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  themeButtonContainer: {
-    backgroundColor: colors.primary,
-    borderRadius: spacing.medium,
-    padding: spacing.small,
+  buttonText: {
+    fontSize: fontSize.subtitle,
+    color: colors.text.primary,
   },
 });
