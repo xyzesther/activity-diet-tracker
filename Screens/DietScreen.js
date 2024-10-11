@@ -4,6 +4,7 @@ import { spacing } from '../styles/styles'
 import ItemsList from '../Components/ItemsList'
 import { useTheme } from '../Components/ThemeContext';
 import PressableButton from '../Components/PressableButton';
+
 export default function DietScreen({ navigation }) {
   const { theme } = useTheme();
 
