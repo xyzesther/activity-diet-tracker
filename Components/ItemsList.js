@@ -78,6 +78,8 @@ const styles = StyleSheet.create({
   },
 
   itemDetailsContainer: {
+    width: 80,
+    height: 30,
     marginHorizontal: spacing.small,
     backgroundColor: colors.background.white,
     paddingVertical: spacing.small,
