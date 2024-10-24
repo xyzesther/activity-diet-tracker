@@ -45,6 +45,7 @@ export default function AddAnActivityScreen( { navigation }) {
         isSpecial: (activityType === 'Running' || activityType === 'Weights') && parseInt(duration) > 60,
       };
 
+      // Call the writeEntryToDB function to add the new activity entry to the database
       try {
         await writeEntryToDB('exercise', newEntry);
         navigation.goBack();

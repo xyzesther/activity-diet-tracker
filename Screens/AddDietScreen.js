@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View, TextInput, Alert } from 'react-native'
-import React, { useState, useContext } from 'react'
-import { EntriesContext } from '../Components/EntriesContext';
+import React, { useState } from 'react'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles';
 import { useTheme } from '../Components/ThemeContext';
 import PressableButton from '../Components/PressableButton';
+import { writeEntryToDB } from '../Firebase/firestoreHelper';
 
 export default function AddDietScreen({ navigation }) {
-  const { addNewEntry } = useContext(EntriesContext);
   const [dietDescription, setDietDescription] = useState('');
   const [dietCalories, setDietCalories] = useState('');
   const [dietDate, setDietDate] = useState(null);
@@ -27,7 +26,6 @@ export default function AddDietScreen({ navigation }) {
   function handleAddDiet() {
     if (validateInputs()) {
       const newEntry = {
-        type: 'diet',
         id: Date.now(),
         name: dietDescription,
         details: dietCalories,
@@ -35,8 +33,13 @@ export default function AddDietScreen({ navigation }) {
         isSpecial: dietCalories > 800,
       };
 
-      addNewEntry('diet', newEntry);
-      navigation.goBack();
+      // Call the writeEntryToDB function to add the new diet entry to the database
+      try {
+        writeEntryToDB('diet', newEntry);
+        navigation.goBack();
+      } catch (error) {
+        console.log('Error adding a new diet entry: ', error);
+      }
     }
   };
 
@@ -72,6 +75,7 @@ export default function AddDietScreen({ navigation }) {
             setDietDate(new Date()); 
           }
         }}
+        editable={false}
       />
       {showDatePicker && (
         <DateTimePicker
