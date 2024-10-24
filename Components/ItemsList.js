@@ -25,7 +25,15 @@ export default function ItemsList({ type }) {
         style={styles.itemContainer}
         onPress={() => navigation.navigate('Edit Entry', { itemId: item.id })}
       >
-        <Text style={styles.itemName}>{item.name}</Text>
+        <View style={styles.itemNameContainer}>
+          <Text 
+            style={styles.itemName}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {item.name}
+          </Text>
+        </View>
         {item.isSpecial && 
           <Image 
             source={require('../assets/special.png')}
@@ -34,10 +42,22 @@ export default function ItemsList({ type }) {
           />
         }
         <View style={styles.itemDateContainer}>
-          <Text style={styles.itemDate}>{item.date}</Text>
+          <Text 
+            style={styles.itemDate} 
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {item.date}
+          </Text>
         </View>
         <View style={styles.itemDetailsContainer}>
-          <Text style={styles.itemDetails}>{item.details}</Text>
+          <Text 
+            style={styles.itemDetails}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {item.details}
+          </Text>
         </View>
       </Pressable>
     )
@@ -67,14 +87,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  itemNameContainer: {
+    flex: 3,
+    backgroundColor: colors.background.transparent,
+    paddingVertical: spacing.small,
+    paddingHorizontal: spacing.small,
+  },
+
   itemName: {
-    flexGrow: 1,
     color: colors.text.primary,
     fontSize: fontSize.subtitle,
     fontWeight: 'bold',
   },
 
   itemDateContainer: {
+    flex: 4,
     marginHorizontal: spacing.xs,
     backgroundColor: colors.background.white,
     paddingVertical: spacing.small,
@@ -90,8 +117,7 @@ const styles = StyleSheet.create({
   },
 
   itemDetailsContainer: {
-    width: 80,
-    height: 30,
+    flex: 2,
     marginHorizontal: spacing.small,
     backgroundColor: colors.background.white,
     paddingVertical: spacing.small,
@@ -109,6 +135,6 @@ const styles = StyleSheet.create({
   image: {
     width: 20,
     height: 20,
-    marginHorizontal: spacing.medium,
+    marginHorizontal: spacing.small,
   }
 })
