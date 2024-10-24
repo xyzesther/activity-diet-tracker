@@ -1,14 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { EntriesContext } from '../Components/EntriesContext';
 import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles';
 import { useTheme } from '../Components/ThemeContext';
 import PressableButton from '../Components/PressableButton';
+import { writeEntryToDB } from '../Firebase/firestoreHelper';
 
 export default function AddAnActivityScreen( { navigation }) {
-  const { addNewEntry } = useContext(EntriesContext);
   const [activityType, setActivityType] = useState('');
   const [duration, setDuration] = useState('');
   const [date, setDate] = useState(null);
@@ -36,10 +35,9 @@ export default function AddAnActivityScreen( { navigation }) {
   };
 
   // Handle adding a new activity entry
-  function handleAddActivity() {
+  async function handleAddActivity() {
     if (validateInputs()) {
       const newEntry = {
-        type: 'exercise',
         id: Date.now(),
         name: activityType,
         details: `${duration} min`,
@@ -47,8 +45,12 @@ export default function AddAnActivityScreen( { navigation }) {
         isSpecial: (activityType === 'Running' || activityType === 'Weights') && parseInt(duration) > 60,
       };
 
-      addNewEntry('exercise', newEntry);
-      navigation.goBack();
+      try {
+        await writeEntryToDB('exercise', newEntry);
+        navigation.goBack();
+      } catch (error) {
+        console.log('Error adding a new activity: ', error);
+      }
     }
   };
 
@@ -77,6 +79,7 @@ export default function AddAnActivityScreen( { navigation }) {
         value={duration}
         onChangeText={setDuration}
         keyboardType="numeric"
+        blurOnSubmit={true}
       />
 
       {/* Date */}
@@ -90,6 +93,7 @@ export default function AddAnActivityScreen( { navigation }) {
             setDate(new Date()); 
           }
         }}
+        editable={false}
       />
       {showDatePicker && (
         <DateTimePicker

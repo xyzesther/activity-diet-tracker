@@ -1,18 +1,30 @@
-import { FlatList, StyleSheet, Text, View, Image } from 'react-native'
-import React, { useContext } from 'react'
-import { EntriesContext } from './EntriesContext'
+import { FlatList, StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles'
+import { database } from '../Firebase/firebaseSetup'
+import { collection, onSnapshot } from 'firebase/firestore'
 
 export default function ItemsList({ type }) {
-  const { entries } = useContext(EntriesContext);
+  const [entries, setEntries] = useState([]);
 
-  // Filter entries based on type
-  const filteredEntries = entries[type];
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(database, type), (querySnapshot) => {
+        let fetchedEntries = [];
+        querySnapshot.forEach((docSnapshot) => {
+          fetchedEntries.push({ ...docSnapshot.data(), id: docSnapshot.id });
+        });
+        setEntries(fetchedEntries);
+      });
+      return () => unsubscribe();
+  }, [type]);
 
   // Render items
   function renderItems({ item }) {
     return (
-      <View style={styles.itemContainer}>
+      <Pressable 
+        style={styles.itemContainer}
+        onPress={() => navigation.navigate('Edit Entry', { itemId: item.id })}
+      >
         <Text style={styles.itemName}>{item.name}</Text>
         {item.isSpecial && 
           <Image 
@@ -27,14 +39,14 @@ export default function ItemsList({ type }) {
         <View style={styles.itemDetailsContainer}>
           <Text style={styles.itemDetails}>{item.details}</Text>
         </View>
-      </View>
+      </Pressable>
     )
   };
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={filteredEntries}
+        data={entries}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItems}
       />
