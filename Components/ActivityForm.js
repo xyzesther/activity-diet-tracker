@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -7,11 +7,11 @@ import PressableButton from './PressableButton';
 import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles';
 import { useTheme } from './ThemeContext';
 
-export default function ActivityForm({ initialData={}, onSubmit, onCancel, isEditMode=false }) {
+export default function ActivityForm({ initialData, onSubmit, onCancel, isEditMode=false }) {
   const { theme } = useTheme();
-  const [activityType, setActivityType] = useState(initialData?.activityType || '');
-  const [duration, setDuration] = useState(initialData?.duration || '');
-  const [date, setDate] = useState(initialData?.date ? new Date(initialData.date) : null);
+  const [activityType, setActivityType] = useState('');
+  const [duration, setDuration] = useState('');
+  const [date, setDate] = useState(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [open, setOpen] = useState(false);
   const [isSpecial, setIsSpecial] = useState(initialData?.isSpecial || false);
@@ -26,6 +26,16 @@ export default function ActivityForm({ initialData={}, onSubmit, onCancel, isEdi
     { label: 'Cycling', value: 'Cycling' },
     { label: 'Hiking', value: 'Hiking' },
   ]);
+
+  useEffect(() => {
+    // update the form fields when data is passed in
+    if (initialData) {
+      setActivityType(initialData.activityType);
+      setDuration(initialData.duration);
+      setDate(initialData.date ? new Date(initialData.date) : null);
+      setIsSpecial(initialData.isSpecial);
+    }
+  }, [initialData]);
 
   // Validate inputs
   function validateInputs() {
@@ -158,11 +168,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: spacing.large,
   },
+
   label: {
     fontSize: fontSize.subtitle,
     fontWeight: 'bold',
     marginBottom: spacing.small,
   },
+
   dropdown: {
     marginBottom: spacing.large,
     borderWidth: borderWidth.medium,
@@ -170,15 +182,18 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.medium,
     backgroundColor: colors.background.secondary,
   },
+
   dropdownText: {
     color: colors.primary,
   },
+
   dropdownContainer: {
     borderWidth: borderWidth.small,
     borderColor: colors.primary,
     borderRadius: borderRadius.medium,
     backgroundColor: colors.background.white,
   },
+
   input: {
     height: 40,
     borderWidth: borderWidth.medium,
@@ -189,6 +204,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
     backgroundColor: colors.background.secondary,
   },
+
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -198,20 +214,24 @@ const styles = StyleSheet.create({
     right: 0,
     paddingHorizontal: spacing.small,
   },
+
   buttonText: {
     fontSize: fontSize.subtitle,
     color: colors.text.primary,
   },
+
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: spacing.large,
     padding: spacing.small,
   },
+
   checkboxLabel: {
     fontWeight: 'bold',
     color: colors.primary,
   },
+  
   checkbox: {
     margin: spacing.medium,
   },
