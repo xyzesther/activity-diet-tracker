@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomTabNavigator from './Components/TabNavigator';
 import AddAnActivityScreen from './Screens/AddAnActivityScreen';
 import AddDietScreen from './Screens/AddDietScreen';
+import EditActivityScreen from './Screens/EditActivityScreen';
+import EditDietScreen from './Screens/EditDietScreen';
 import { colors } from './styles/styles';
 import { EntriesProvider } from './Components/EntriesContext';
 import { ThemeProvider } from './Components/ThemeContext';
@@ -39,6 +41,20 @@ export default function App() {
             <Stack.Screen 
               name="Add A Diet Entry" 
               component={AddDietScreen}
+              options={{
+                headerBackTitleVisible: false,
+              }}
+            />
+            <Stack.Screen 
+              name="Edit Activity" 
+              component={EditActivityScreen}
+              options={{
+                headerBackTitleVisible: false,
+              }}
+            />
+            <Stack.Screen 
+              name="Edit Diet" 
+              component={EditDietScreen}
               options={{
                 headerBackTitleVisible: false,
               }}
