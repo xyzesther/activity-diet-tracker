@@ -4,7 +4,7 @@ import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/
 import { database } from '../Firebase/firebaseSetup'
 import { collection, onSnapshot } from 'firebase/firestore'
 
-export default function ItemsList({ type }) {
+export default function ItemsList({ type, navigation }) {
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
@@ -18,12 +18,16 @@ export default function ItemsList({ type }) {
       return () => unsubscribe();
   }, [type]);
 
+  function getScreenName() {
+    return type === 'exercise' ? 'Edit Activity' : 'Edit Diet';
+  }
+
   // Render items
   function renderItems({ item }) {
     return (
       <Pressable 
         style={styles.itemContainer}
-        onPress={() => navigation.navigate('Edit Entry', { itemId: item.id })}
+        onPress={() => navigation.navigate(getScreenName(), { entryId: item.id })}
       >
         <View style={styles.itemNameContainer}>
           <Text 
@@ -31,7 +35,7 @@ export default function ItemsList({ type }) {
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            {item.name}
+            {type === 'exercise' ? item.activityType : item.description}
           </Text>
           {item.isSpecial && 
             <Image 
@@ -57,7 +61,7 @@ export default function ItemsList({ type }) {
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            {item.details}
+            {type === 'exercise' ? item.duration : item.calories}
           </Text>
         </View>
       </Pressable>

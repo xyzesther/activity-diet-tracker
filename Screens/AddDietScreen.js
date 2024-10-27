@@ -27,8 +27,8 @@ export default function AddDietScreen({ navigation }) {
     if (validateInputs()) {
       const newEntry = {
         id: Date.now(),
-        name: dietDescription,
-        details: dietCalories,
+        description: dietDescription,
+        calories: dietCalories,
         date: dietDate.toDateString(),
         isSpecial: dietCalories > 800,
       };
