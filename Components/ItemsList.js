@@ -37,15 +37,15 @@ export default function ItemsList({ type, navigation }) {
           >
             {type === 'exercise' ? item.activityType : item.description}
           </Text>
-          {item.isSpecial && 
-            <Image 
-              source={require('../assets/special.png')}
-              alt='this is the special icon for the item'
-              style={styles.icon}
-            />
-            
-          }
         </View>
+        {item.isSpecial && 
+          <Image 
+            source={require('../assets/special.png')}
+            alt='this is the special icon for the item'
+            style={styles.icon}
+          />
+          
+        }
         <View style={styles.itemDateContainer}>
           <Text 
             style={styles.itemDate} 
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.medium,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-start',
   },
 
   itemNameContainer: {
@@ -107,11 +108,10 @@ const styles = StyleSheet.create({
   },
 
   itemDateContainer: {
-    flex: 2,
+    flex: 3,
     marginHorizontal: spacing.xs,
     backgroundColor: colors.background.white,
     paddingVertical: spacing.small,
-    paddingHorizontal: spacing.medium,
     borderRadius: borderRadius.small,
   },
 
@@ -123,11 +123,10 @@ const styles = StyleSheet.create({
   },
 
   itemDetailsContainer: {
-    flex: 1,
+    flex: 1.5,
     marginHorizontal: spacing.small,
     backgroundColor: colors.background.white,
     paddingVertical: spacing.small,
-    paddingHorizontal: spacing.medium,
     borderRadius: borderRadius.small,
   },
 
