@@ -4,6 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles';
 import { useTheme } from '../Components/ThemeContext';
 import PressableButton from '../Components/PressableButton';
+import Checkbox from 'expo-checkbox';
 
 export default function AddDietScreen({ initialData, onSubmit, onCancel, isEditMode=false }) {
   const { theme } = useTheme();
@@ -19,7 +20,7 @@ export default function AddDietScreen({ initialData, onSubmit, onCancel, isEditM
     if (initialData) {
       setDietDescription(initialData.description);
       setDietCalories(initialData.calories);
-      setDate(initialData.date ? new Date(initialData.date) : null);
+      setDietDate(initialData.date ? new Date(initialData.date) : null);
       setIsSpecial(initialData.isSpecial);
     }
   }, [initialData]);
