@@ -6,8 +6,7 @@ export default function AddAnActivityScreen( { navigation }) {
 
   async function handleAddActivity(entryData) {
     try {
-      const newEntry = { id: Date.now(), ...entryData };
-      await writeEntryToDB('exercise', newEntry);
+      await writeEntryToDB('exercise', entryData);
       navigation.goBack();
     } catch (error) {
       console.log('Error adding a new activity: ', error);

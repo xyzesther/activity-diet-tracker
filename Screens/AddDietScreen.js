@@ -3,10 +3,10 @@ import { writeEntryToDB } from '../Firebase/firestoreHelper';
 import DietForm from '../Components/DietForm';
 
 export default function AddDietScreen({ navigation }) {
-  async function handleAddDiet() {
+
+  async function handleAddDiet(entryData) {
     try {
-      const newEntry = { id: Date.now(), ...entryData };
-      await writeEntryToDB('diet', newEntry);
+      await writeEntryToDB('diet', entryData);
       navigation.goBack();
     } catch (error) {
       console.log('Error adding a new diet: ', error);
