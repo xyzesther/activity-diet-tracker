@@ -2,17 +2,21 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import Checkbox from 'expo-checkbox';
 import PressableButton from './PressableButton';
 import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles';
 import { useTheme } from './ThemeContext';
 
 export default function ActivityForm({ initialData={}, onSubmit, onCancel, isEditMode=false }) {
   const { theme } = useTheme();
-  const [activityType, setActivityType] = useState(initialData.activityType || '');
-  const [duration, setDuration] = useState(initialData.duration || '');
-  const [date, setDate] = useState(initialData.date ? new Date(initialData.date) : null);
+  const [activityType, setActivityType] = useState(initialData?.activityType || '');
+  const [duration, setDuration] = useState(initialData?.duration || '');
+  const [date, setDate] = useState(initialData?.date ? new Date(initialData.date) : null);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [open, setOpen] = useState(false);
+  const [isSpecial, setIsSpecial] = useState(initialData?.isSpecial || false);
+  const [removeSpecial, setRemoveSpecial] = useState(false);
+
   const [items, setItems] = useState([
     { label: 'Walking', value: 'Walking' },
     { label: 'Running', value: 'Running' },
@@ -35,13 +39,32 @@ export default function ActivityForm({ initialData={}, onSubmit, onCancel, isEdi
   // Handle form submission
   async function handleSubmit() {
     if (validateInputs()) {
+      // Update isSpecial based on the checkbox value
+      let updatedIsSpecial = isSpecial;
+      if (isEditMode && removeSpecial) {
+        updatedIsSpecial = false;
+      }
+
       const entryData = {
-        name: activityType,
-        details: `${duration} min`,
+        activityType: activityType,
+        duration: `${duration} min`,
         date: date.toDateString(),
-        isSpecial: (activityType === 'Running' || activityType === 'Weights') && parseInt(duration) > 60,
+        isSpecial: isEditMode ? updatedIsSpecial : (activityType === 'Running' || activityType === 'Weights') && parseInt(duration) > 60,
       };
-      onSubmit(entryData);
+
+      // Show an alert if the user is in edit mode
+      if (isEditMode) {
+        Alert.alert(
+          'Important',
+          'Are you sure you want to save these changes?',
+          [
+            { text: 'Cancel', style: 'cancel' },
+            { text: 'Yes', onPress: () => onSubmit(entryData) },
+          ]
+        );
+      } else {
+        onSubmit(entryData);
+      }
     }
   };
       
@@ -96,6 +119,21 @@ export default function ActivityForm({ initialData={}, onSubmit, onCancel, isEdi
             if (selectedDate) setDate(selectedDate);
           }}
         />
+      )}
+
+      {/* Edit Mode has a checkbox for special entry*/}
+      {isEditMode && isSpecial && (
+        <View style={styles.checkboxContainer}>
+          <Text style={ styles.checkboxLabel }>
+            This item is marked as special. 
+            Select the checkbox if you would like to remove it.
+          </Text>
+          <Checkbox
+            value={removeSpecial}
+            onValueChange={setRemoveSpecial}
+            style={styles.checkbox}
+          />
+        </View>
       )}
 
       {/* Buttons */}
@@ -163,5 +201,18 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: fontSize.subtitle,
     color: colors.text.primary,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: spacing.large,
+    padding: spacing.small,
+  },
+  checkboxLabel: {
+    fontWeight: 'bold',
+    color: colors.primary,
+  },
+  checkbox: {
+    margin: spacing.medium,
   },
 });
