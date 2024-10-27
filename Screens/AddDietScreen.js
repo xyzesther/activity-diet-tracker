@@ -1,149 +1,23 @@
-import { StyleSheet, Text, View, TextInput, Alert } from 'react-native'
-import React, { useState } from 'react'
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles';
-import { useTheme } from '../Components/ThemeContext';
-import PressableButton from '../Components/PressableButton';
+import React from 'react'
 import { writeEntryToDB } from '../Firebase/firestoreHelper';
+import DietForm from '../Components/DietForm';
 
 export default function AddDietScreen({ navigation }) {
-  const [dietDescription, setDietDescription] = useState('');
-  const [dietCalories, setDietCalories] = useState('');
-  const [dietDate, setDietDate] = useState(null);
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const { theme } = useTheme();
-
-  // Validate inputs
-  const validateInputs = () => {
-    if (!dietDescription || !dietDate || !dietCalories || isNaN(dietCalories) || Number(dietCalories) < 0) {
-      Alert.alert('Invalid input', 'Please check your input values');
-      return false;
-    }
-    return true;
-  };
-
-  // Handle adding a new diet entry
-  function handleAddDiet() {
-    if (validateInputs()) {
-      const newEntry = {
-        id: Date.now(),
-        description: dietDescription,
-        calories: dietCalories,
-        date: dietDate.toDateString(),
-        isSpecial: dietCalories > 800,
-      };
-
-      // Call the writeEntryToDB function to add the new diet entry to the database
-      try {
-        writeEntryToDB('diet', newEntry);
-        navigation.goBack();
-      } catch (error) {
-        console.log('Error adding a new diet entry: ', error);
-      }
+  async function handleAddDiet() {
+    try {
+      const newEntry = { id: Date.now(), ...entryData };
+      await writeEntryToDB('diet', newEntry);
+      navigation.goBack();
+    } catch (error) {
+      console.log('Error adding a new diet: ', error);
     }
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
-      {/* Description */}
-      <Text style={[styles.label, { color: theme.textColor }]}>Description *</Text>
-      <TextInput
-        style={styles.descriptionInput}
-        value={dietDescription}
-        onChangeText={(text) => setDietDescription(text)}
-        multiline={true}
-        textAlignVertical='top'
-      />
-
-      {/* Calories */}
-      <Text style={[styles.label, { color: theme.textColor }]}>Calories *</Text>
-      <TextInput
-        style={styles.input}
-        value={dietCalories}
-        onChangeText={(text) => setDietCalories(text)}
-        keyboardType='numeric'
-      />
-
-      {/* Date */}
-      <Text style={[styles.label, { color: theme.textColor }]}>Date *</Text>
-      <TextInput
-        style={styles.input}
-        value={dietDate ? dietDate.toDateString() : ''}
-        onPressIn={() => {
-          showDatePicker ? setShowDatePicker(false) : setShowDatePicker(true);
-          if (!dietDate) { 
-            setDietDate(new Date()); 
-          }
-        }}
-        editable={false}
-      />
-      {showDatePicker && (
-        <DateTimePicker
-          value={dietDate || new Date()}
-          mode="date"
-          display="inline"
-          onChange={(event, selectedDate) => {
-            setShowDatePicker(false);
-            if (selectedDate) setDietDate(selectedDate);
-          }}
-        />
-      )}
-
-      {/* Buttons */}
-      <View style={styles.buttonContainer}>
-        <PressableButton pressedFunction={() => navigation.goBack()}>
-          <Text style={styles.buttonText}>Cancel</Text>
-        </PressableButton>
-        <PressableButton pressedFunction={handleAddDiet}>
-          <Text style={styles.buttonText}>Save</Text>
-        </PressableButton>
-      </View>
-    </View>
-  )
-    
+    <DietForm
+      onSubmit={handleAddDiet}
+      onCancel={() => navigation.goBack()}
+      isEditMode={false}
+    />
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: spacing.large,
-  },
-  label: {
-    fontSize: fontSize.subtitle,
-    fontWeight: 'bold',
-    marginBottom: spacing.small,
-  },
-  input: {
-    height: 40,
-    borderWidth: borderWidth.medium,
-    borderColor: colors.primary,
-    borderRadius: borderRadius.medium,
-    paddingHorizontal: spacing.medium,
-    marginBottom: spacing.large,
-    color: colors.primary,
-    backgroundColor: colors.background.secondary,
-  },
-  descriptionInput: {
-    height: 80,
-    borderWidth: borderWidth.medium,
-    borderColor: colors.primary,
-    borderRadius: borderRadius.medium,
-    paddingHorizontal: spacing.medium,
-    marginBottom: spacing.large,
-    color: colors.primary,
-    backgroundColor: colors.background.secondary,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    position: 'absolute',
-    bottom: 100,
-    left: 0,
-    right: 0,
-    paddingHorizontal: spacing.small,
-  },
-  buttonText: {
-    fontSize: fontSize.subtitle,
-    color: colors.text.primary,
-  },
-});
