@@ -33,14 +33,15 @@ export default function ItemsList({ type }) {
           >
             {item.name}
           </Text>
+          {item.isSpecial && 
+            <Image 
+              source={require('../assets/special.png')}
+              alt='this is the special icon for the item'
+              style={styles.icon}
+            />
+            
+          }
         </View>
-        {item.isSpecial && 
-          <Image 
-            source={require('../assets/special.png')}
-            alt='this is the special icon for the item'
-            style={styles.image}
-          />
-        }
         <View style={styles.itemDateContainer}>
           <Text 
             style={styles.itemDate} 
@@ -88,7 +89,8 @@ const styles = StyleSheet.create({
   },
 
   itemNameContainer: {
-    flex: 3,
+    flex: 2,
+    flexDirection: 'row',
     backgroundColor: colors.background.transparent,
     paddingVertical: spacing.small,
     paddingHorizontal: spacing.small,
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
   },
 
   itemDateContainer: {
-    flex: 4,
+    flex: 2,
     marginHorizontal: spacing.xs,
     backgroundColor: colors.background.white,
     paddingVertical: spacing.small,
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
   },
 
   itemDetailsContainer: {
-    flex: 2,
+    flex: 1,
     marginHorizontal: spacing.small,
     backgroundColor: colors.background.white,
     paddingVertical: spacing.small,
@@ -132,9 +134,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  image: {
+  icon: {
     width: 20,
     height: 20,
     marginHorizontal: spacing.small,
-  }
+  },
 })
