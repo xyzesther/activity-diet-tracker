@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import ActivityForm from '../Components/ActivityForm';
 import { getAnEntryFromDB, updateEntryInDB } from '../Firebase/firestoreHelper';
 
