@@ -14,7 +14,7 @@ export default function ActivityForm({ initialData, onSubmit, onCancel, isEditMo
   const [date, setDate] = useState(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [open, setOpen] = useState(false);
-  const [isSpecial, setIsSpecial] = useState(initialData?.isSpecial || false);
+  const [isSpecial, setIsSpecial] = useState(false);
   const [removeSpecial, setRemoveSpecial] = useState(false);
 
   const [items, setItems] = useState([
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.primary,
   },
-  
+
   checkbox: {
     margin: spacing.medium,
   },
