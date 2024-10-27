@@ -31,7 +31,7 @@ export default function DietScreen({ navigation }) {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <ItemsList type='diet' />
+      <ItemsList type='diet' navigation={navigation}/>
     </View>
   )
 }
