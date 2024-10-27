@@ -31,7 +31,7 @@ export default function ActivitiesScreen({ navigation }) {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <ItemsList type='exercise' />
+      <ItemsList type='exercise' navigation={navigation}/>
     </View>
   )
 }
