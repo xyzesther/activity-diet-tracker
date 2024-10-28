@@ -68,7 +68,7 @@ export default function ActivityForm({ initialData, onSubmit, onCancel, isEditMo
           'Important',
           'Are you sure you want to save these changes?',
           [
-            { text: 'Cancel', style: 'cancel' },
+            { text: 'No', style: 'cancel' },
             { text: 'Yes', onPress: () => onSubmit(entryData) },
           ]
         );
