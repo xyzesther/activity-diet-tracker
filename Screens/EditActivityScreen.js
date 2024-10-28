@@ -41,7 +41,7 @@ export default function EditActivityScreen({ route, navigation }) {
   }
 
   // Show an Alert to comfirm before deleting the activity
-  function confirmDeleteEntry() {
+  function confirmDeleteActivity() {
     Alert.alert(
       'Delete',
       'Are you sure you want to delete this item?',
@@ -52,6 +52,7 @@ export default function EditActivityScreen({ route, navigation }) {
     );
   }
 
+  // Set the headerRight button to delete the activity
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -59,7 +60,7 @@ export default function EditActivityScreen({ route, navigation }) {
           name="trash-o"
           size={24}
           color="white"
-          onPress={confirmDeleteEntry}
+          onPress={confirmDeleteActivity}
           style={{ marginRight: 15 }}
         />
       ),
