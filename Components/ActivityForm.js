@@ -31,7 +31,7 @@ export default function ActivityForm({ initialData, onSubmit, onCancel, isEditMo
     // update the form fields when data is passed in
     if (initialData) {
       setActivityType(initialData.activityType);
-      setDuration(initialData.duration);
+      setDuration(initialData.duration.replace(' min', ''));
       setDate(initialData.date ? new Date(initialData.date) : null);
       setIsSpecial(initialData.isSpecial);
     }
