@@ -1,5 +1,5 @@
 import { database } from "./firebaseSetup";
-import { collection, doc, addDoc, getDocs, getDoc, setDoc } from 'firebase/firestore';
+import { collection, doc, addDoc, getDocs, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 
 // Function to fetch entries from the database
 export async function fetchEntriesFromDB(collectionName) {
@@ -43,5 +43,16 @@ export async function updateEntryInDB(collectionName, entryId, updatedEntry) {
     await setDoc(doc(database, `${collectionName}/${entryId}`), updatedEntry);
   } catch (error) {
     console.log("Error updating entry in DB: ", error);
+  }
+};
+
+// Function to delete an entry from the database
+export async function deleteEntryFromDB(collectionName, entryId) {
+  try {
+    const docRef = doc(database, collectionName, entryId);
+    await deleteDoc(docRef);
+  } catch (error) {
+    console.log('Error deleting entry from DB:', error);
+    throw error;
   }
 };

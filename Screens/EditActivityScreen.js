@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import ActivityForm from '../Components/ActivityForm';
-import { getAnEntryFromDB, updateEntryInDB } from '../Firebase/firestoreHelper';
+import { getAnEntryFromDB, updateEntryInDB, deleteEntryFromDB } from '../Firebase/firestoreHelper';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function EditActivityScreen({ route, navigation }) {
   const { entryId } = route.params;
@@ -28,6 +29,42 @@ export default function EditActivityScreen({ route, navigation }) {
       console.log('Error updating the activity: ', error);
     }
   }
+
+  // Call the deleteEntryFromDB function to delete the activity from the database
+  async function handleDeleteActivity() {
+    try {
+      await deleteEntryFromDB('exercise', entryId);
+      navigation.goBack();
+    } catch (error) {
+      console.log('Error deleting the activity: ', error);
+    }
+  }
+
+  // Show an Alert to comfirm before deleting the activity
+  function confirmDeleteEntry() {
+    Alert.alert(
+      'Delete',
+      'Are you sure you want to delete this item?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Delete', style: 'destructive', onPress: handleDeleteActivity },
+      ]
+    );
+  }
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <FontAwesome
+          name="trash-o"
+          size={24}
+          color="white"
+          onPress={confirmDeleteEntry}
+          style={{ marginRight: 15 }}
+        />
+      ),
+    });
+  }, [navigation]);
 
   return (
     <ActivityForm
