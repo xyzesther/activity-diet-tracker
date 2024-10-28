@@ -50,16 +50,15 @@ export default function ActivityForm({ initialData, onSubmit, onCancel, isEditMo
   async function handleSubmit() {
     if (validateInputs()) {
       // Update isSpecial based on the checkbox value
-      let updatedIsSpecial = isSpecial;
-      if (isEditMode && removeSpecial) {
-        updatedIsSpecial = false;
-      }
+      const updatedIsSpecial = isEditMode
+      ? (removeSpecial ? false : (activityType === 'Running' || activityType === 'Weights') && parseInt(duration) > 60)
+      : (activityType === 'Running' || activityType === 'Weights') && parseInt(duration) > 60;
 
       const entryData = {
         activityType: activityType,
         duration: `${duration} min`,
         date: date.toDateString(),
-        isSpecial: isEditMode ? updatedIsSpecial : (activityType === 'Running' || activityType === 'Weights') && parseInt(duration) > 60,
+        isSpecial: updatedIsSpecial,
       };
 
       // Show an alert if the user is in edit mode
