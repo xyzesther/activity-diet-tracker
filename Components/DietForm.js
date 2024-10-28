@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
 
   checkboxLabel: {
     fontWeight: 'bold',
-    color: colors.primary,
+    color: colors.text.black,
   },
 
   checkbox: {
