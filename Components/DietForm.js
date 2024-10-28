@@ -38,16 +38,15 @@ export default function AddDietScreen({ initialData, onSubmit, onCancel, isEditM
   async function handleSubmitDiet() {
     if (validateInputs()) {
       // Update isSpecial based on the checkbox value
-      let updatedIsSpecial = isSpecial;
-      if (isEditMode && removeSpecial) {
-        updatedIsSpecial = false;
-      }
+      const updatedIsSpecial = isEditMode 
+      ? (removeSpecial ? false : dietCalories > 800)
+      : dietCalories > 800;
 
       const entryData = {
         description: dietDescription,
         calories: dietCalories,
         date: dietDate.toDateString(),
-        isSpecial: isEditMode ? updatedIsSpecial : dietCalories > 800,
+        isSpecial: updatedIsSpecial,
       }
 
       // Show an alert if the user is in edit mode
