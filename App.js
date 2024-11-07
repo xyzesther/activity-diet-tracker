@@ -2,10 +2,11 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomTabNavigator from './Components/TabNavigator';
-import AddAnActivityScreen from './Screens/AddAnActivityScreen';
+import AddActivityScreen from './Screens/AddActivityScreen';
 import AddDietScreen from './Screens/AddDietScreen';
+import EditActivityScreen from './Screens/EditActivityScreen';
+import EditDietScreen from './Screens/EditDietScreen';
 import { colors } from './styles/styles';
-import { EntriesProvider } from './Components/EntriesContext';
 import { ThemeProvider } from './Components/ThemeContext';
 
 const Stack = createNativeStackNavigator();
@@ -13,39 +14,52 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <ThemeProvider>
-      <EntriesProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerStyle: {backgroundColor: colors.primary},
-              headerTintColor: colors.text.primary,
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {backgroundColor: colors.primary},
+            headerTintColor: colors.text.primary,
+          }}
+        >
+          <Stack.Screen 
+            name="BottomTab" 
+            component={BottomTabNavigator} 
+            options={({ route }) => ({
+              title: getHeaderTitle(route),
+              headerShown: false 
+            })}
+          />
+          <Stack.Screen 
+            name="Add An Activity" 
+            component={AddActivityScreen}
+            options={{
+              headerBackTitleVisible: false,
             }}
-          >
-            <Stack.Screen 
-              name="BottomTab" 
-              component={BottomTabNavigator} 
-              options={({ route }) => ({
-                title: getHeaderTitle(route),
-                headerShown: false 
-              })}
-            />
-            <Stack.Screen 
-              name="Add An Activity" 
-              component={AddAnActivityScreen}
-              options={{
-                headerBackTitleVisible: false,
-              }}
-            />
-            <Stack.Screen 
-              name="Add A Diet Entry" 
-              component={AddDietScreen}
-              options={{
-                headerBackTitleVisible: false,
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </EntriesProvider>
+          />
+          <Stack.Screen 
+            name="Add A Diet Entry" 
+            component={AddDietScreen}
+            options={{
+              headerBackTitleVisible: false,
+            }}
+          />
+          <Stack.Screen 
+            name="Edit Activity" 
+            component={EditActivityScreen}
+            options={{
+              headerBackTitleVisible: false,
+            }}
+          />
+          <Stack.Screen 
+            name="Edit Diet" 
+            component={EditDietScreen}
+            options={{
+              headerBackTitleVisible: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+
     </ThemeProvider>
   );
 }

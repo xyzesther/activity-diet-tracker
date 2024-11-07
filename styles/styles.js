@@ -10,6 +10,7 @@ export const colors = {
   text: {
     primary: 'white',
     secondary: '#483d8b',
+    black: 'black',
   }
 };
 

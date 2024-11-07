@@ -1,40 +1,77 @@
-import { FlatList, StyleSheet, Text, View, Image } from 'react-native'
-import React, { useContext } from 'react'
-import { EntriesContext } from './EntriesContext'
+import { FlatList, StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { colors, spacing, fontSize, borderRadius, borderWidth } from '../styles/styles'
+import { database } from '../Firebase/firebaseSetup'
+import { collection, onSnapshot } from 'firebase/firestore'
 
-export default function ItemsList({ type }) {
-  const { entries } = useContext(EntriesContext);
+export default function ItemsList({ type, navigation }) {
+  const [entries, setEntries] = useState([]);
 
-  // Filter entries based on type
-  const filteredEntries = entries[type];
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(database, type), (querySnapshot) => {
+        let fetchedEntries = [];
+        querySnapshot.forEach((docSnapshot) => {
+          fetchedEntries.push({ ...docSnapshot.data(), id: docSnapshot.id });
+        });
+        setEntries(fetchedEntries);
+      });
+      return () => unsubscribe();
+  }, [type]);
+
+  function getScreenName() {
+    return type === 'exercise' ? 'Edit Activity' : 'Edit Diet';
+  }
 
   // Render items
   function renderItems({ item }) {
     return (
-      <View style={styles.itemContainer}>
-        <Text style={styles.itemName}>{item.name}</Text>
+      <Pressable 
+        style={styles.itemContainer}
+        onPress={() => navigation.navigate(getScreenName(), { entryId: item.id })}
+      >
+        <View style={styles.itemNameContainer}>
+          <Text 
+            style={styles.itemName}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {type === 'exercise' ? item.activityType : item.description}
+          </Text>
+        </View>
         {item.isSpecial && 
           <Image 
             source={require('../assets/special.png')}
             alt='this is the special icon for the item'
-            style={styles.image}
+            style={styles.icon}
           />
+          
         }
         <View style={styles.itemDateContainer}>
-          <Text style={styles.itemDate}>{item.date}</Text>
+          <Text 
+            style={styles.itemDate} 
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {item.date}
+          </Text>
         </View>
         <View style={styles.itemDetailsContainer}>
-          <Text style={styles.itemDetails}>{item.details}</Text>
+          <Text 
+            style={styles.itemDetails}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {type === 'exercise' ? item.duration : item.calories}
+          </Text>
         </View>
-      </View>
+      </Pressable>
     )
   };
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={filteredEntries}
+        data={entries}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItems}
       />
@@ -53,20 +90,28 @@ const styles = StyleSheet.create({
     marginBottom: spacing.medium,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+
+  itemNameContainer: {
+    flex: 2,
+    flexDirection: 'row',
+    backgroundColor: colors.background.transparent,
+    paddingVertical: spacing.small,
+    paddingHorizontal: spacing.small,
   },
 
   itemName: {
-    flexGrow: 1,
     color: colors.text.primary,
     fontSize: fontSize.subtitle,
     fontWeight: 'bold',
   },
 
   itemDateContainer: {
+    flex: 3,
     marginHorizontal: spacing.xs,
     backgroundColor: colors.background.white,
     paddingVertical: spacing.small,
-    paddingHorizontal: spacing.medium,
     borderRadius: borderRadius.small,
   },
 
@@ -78,12 +123,10 @@ const styles = StyleSheet.create({
   },
 
   itemDetailsContainer: {
-    width: 80,
-    height: 30,
+    flex: 1.5,
     marginHorizontal: spacing.small,
     backgroundColor: colors.background.white,
     paddingVertical: spacing.small,
-    paddingHorizontal: spacing.medium,
     borderRadius: borderRadius.small,
   },
 
@@ -94,9 +137,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  image: {
+  icon: {
     width: 20,
     height: 20,
-    marginHorizontal: spacing.medium,
-  }
+    marginHorizontal: spacing.small,
+  },
 })

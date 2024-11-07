@@ -1,9 +1,10 @@
-import { StyleSheet, View, Image } from 'react-native'
+import { StyleSheet, View, Pressable } from 'react-native'
 import React, { useEffect } from 'react'
 import { spacing } from '../styles/styles'
 import ItemsList from '../Components/ItemsList'
 import { useTheme } from '../Components/ThemeContext';
-import PressableButton from '../Components/PressableButton';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function DietScreen({ navigation }) {
   const { theme } = useTheme();
@@ -12,26 +13,25 @@ export default function DietScreen({ navigation }) {
     navigation.setOptions({
       title: 'Diet',
       headerRight: () => (
-        <PressableButton
-          pressedFunction={() => {
-            navigation.navigate('Add A Diet Entry')
-          }}
-          style={styles.button}
-          pressedStyle={styles.pressedButton}
-        >
-          <Image
-            source={require('../assets/add.png')}
-            alt='an add button'
-            style={styles.image}
+        <Pressable style={styles.addIcon} onPress={() => navigation.navigate('Add A Diet Entry')} >
+          <FontAwesome6 
+            name="add" 
+            size={20} 
+            color="white"
           />
-        </PressableButton>
+          <MaterialIcons 
+            name="fastfood" 
+            size={24} 
+            color="white"
+          />
+        </Pressable>
       ),
     })
   }, [navigation])
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <ItemsList type='diet' />
+      <ItemsList type='diet' navigation={navigation}/>
     </View>
   )
 }
@@ -41,15 +41,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: spacing.large,
   },
-  button: {
-    marginRight: spacing.small,
-  },
-  pressedButton: {
-    opacity: 0,
-  },
-  image: {
-    width: 20,
-    height: 20,
-    marginRight: spacing.medium,
-  }
+
+  addIcon: {
+    flexDirection: 'row',
+    marginRight: spacing.large,
+    alignItems: 'center',
+    gap: 5,
+  }, 
 })
